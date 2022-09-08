@@ -22,6 +22,9 @@
 #include "submodule.h"
 #include "submodule-config.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static int abbrev;
 static int show_deleted;
 static int show_cached;

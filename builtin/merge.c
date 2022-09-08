@@ -50,6 +50,9 @@
 #define NO_FAST_FORWARD (1<<2)
 #define NO_TRIVIAL      (1<<3)
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 struct strategy {
 	const char *name;
 	unsigned attr;

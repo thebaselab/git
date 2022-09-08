@@ -2,6 +2,9 @@
 #include "config.h"
 #include "color.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static int git_use_color_default = GIT_COLOR_AUTO;
 int color_stdout_is_tty = -1;
 
@@ -382,12 +385,13 @@ static int check_auto_color(int fd)
 	static int color_stderr_is_tty = -1;
 	int *is_tty_p = fd == 1 ? &color_stdout_is_tty : &color_stderr_is_tty;
 	if (*is_tty_p < 0)
-		*is_tty_p = isatty(fd);
+		*is_tty_p = ios_isatty(fd);
 	if (*is_tty_p || (fd == 1 && pager_in_use() && pager_use_color)) {
 		if (!is_terminal_dumb())
 			return 1;
 	}
 	return 0;
+	// return 1;
 }
 
 int want_color_fd(int fd, int var)

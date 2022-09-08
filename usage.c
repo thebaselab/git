@@ -6,7 +6,10 @@
 #include "git-compat-util.h"
 #include "cache.h"
 
-static void vreportf(const char *prefix, const char *err, va_list params)
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
+void vreportf(const char *prefix, const char *err, va_list params)
 {
 	char msg[4096];
 	char *p, *pend = msg + sizeof(msg);

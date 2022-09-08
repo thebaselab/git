@@ -14,6 +14,9 @@
 #include "prompt.h"
 #include "fsmonitor-ipc.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 struct category_description {
 	uint32_t category;
 	const char *desc;

@@ -3,7 +3,8 @@
 
 #include "hashmap.h"
 #include "string-list.h"
-
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
 
 /**
  * The config API gives callers a way to access Git configuration files

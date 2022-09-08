@@ -22,6 +22,9 @@
 #include "ref-filter.h"
 #include "date.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static const char * const git_tag_usage[] = {
 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]\n"
 	   "        <tagname> [<head>]"),

@@ -12,6 +12,9 @@
 #include "hook.h"
 #include "compat/nonblock.h"
 
+// #define waitpid(pid, status, options) ios_waitpid(pid)
+#define fork ios_fork
+
 void child_process_init(struct child_process *child)
 {
 	struct child_process blank = CHILD_PROCESS_INIT;
@@ -124,11 +127,19 @@ static inline void close_pair(int fd[2])
 
 int is_executable(const char *name)
 {
+	/* iOS: We have fake executables. */
+	return S_IXUSR;
+
+	printf("is_executable? %s\n", name);
+
 	struct stat st;
 
-	if (stat(name, &st) || /* stat, not lstat */
-	    !S_ISREG(st.st_mode))
+	if (stat(name, &st))
 		return 0;
+
+	// if (stat(name, &st) || /* stat, not lstat */
+	//     !S_ISREG(st.st_mode))
+	// 	return 0;
 
 #if defined(GIT_WINDOWS_NATIVE)
 	/*
@@ -543,8 +554,9 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
 	pid_t waiting;
 	int failed_errno = 0;
 
-	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
-		;	/* nothing */
+	ios_waitpid(pid);
+	// while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
+	// 	;	/* nothing */
 
 	if (waiting < 0) {
 		failed_errno = errno;
@@ -722,7 +734,7 @@ fail_pipe:
 	trace2_child_start(cmd);
 	trace_run_command(cmd);
 
-	fflush(NULL);
+	// fflush(NULL);
 
 	if (cmd->close_object_store)
 		close_object_store(the_repository->objects);
@@ -861,7 +873,13 @@ fail_pipe:
 	 * Note that use of this infrastructure is completely advisory,
 	 * therefore, we keep error checks minimal.
 	 */
-	close(notify_pipe[1]);
+
+	 /*
+	 * iOS: return after fork(). It means we don't close the pipes.
+     *  (because we didn't fork)
+	 */
+
+	// close(notify_pipe[1]);
 	if (xread(notify_pipe[0], &cerr, sizeof(cerr)) == sizeof(cerr)) {
 		/*
 		 * At this point we know that fork() succeeded, but exec()
@@ -1211,7 +1229,7 @@ int start_async(struct async *async)
 
 #ifdef NO_PTHREADS
 	/* Flush stdio before fork() to avoid cloning buffers */
-	fflush(NULL);
+	// fflush(NULL);
 
 	async->pid = fork();
 	if (async->pid < 0) {

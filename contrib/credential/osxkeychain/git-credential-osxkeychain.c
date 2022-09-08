@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <Security/Security.h>
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static SecProtocolType protocol;
 static char *host;
 static char *path;

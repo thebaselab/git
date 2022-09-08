@@ -39,6 +39,9 @@
 #include "commit-graph.h"
 #include "pretty.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static const char * const builtin_commit_usage[] = {
 	N_("git commit [<options>] [--] <pathspec>..."),
 	NULL

@@ -11,6 +11,9 @@
 #include "run-command.h"
 #include "prompt.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static void init_color(struct repository *r, struct add_i_state *s,
 		       const char *section_and_slot, char *dst,
 		       const char *default_color)

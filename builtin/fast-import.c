@@ -26,6 +26,9 @@
 #define DEPTH_BITS 13
 #define MAX_DEPTH ((1<<DEPTH_BITS)-1)
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 /*
  * We abuse the setuid bit on directories to mean "do not delta".
  */

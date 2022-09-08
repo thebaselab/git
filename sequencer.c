@@ -38,6 +38,9 @@
 #include "branch.h"
 #include "log-tree.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
 
 static const char sign_off_header[] = "Signed-off-by: ";

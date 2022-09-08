@@ -36,6 +36,9 @@
 #include "bundle.h"
 #include "bundle-uri.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 /*
  * Overall FIXMEs:
  *  - respect DB_ENVIRONMENT for .git/objects.

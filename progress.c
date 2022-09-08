@@ -17,6 +17,9 @@
 #include "utf8.h"
 #include "config.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 #define TP_IDX_MAX      8
 
 struct throughput {

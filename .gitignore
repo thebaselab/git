@@ -1,3 +1,9 @@
+.DS_Store
+/iOS/out/
+/iOS/Frameworks_iphoneos/
+/ios_system.xcframework
+/openssl.xcframework
+/curl_ios.xcframework
 /fuzz-commit-graph
 /fuzz_corpora
 /fuzz-pack-headers

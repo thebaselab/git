@@ -20,6 +20,9 @@
 
 #define MAX_TAGS	(FLAG_BITS - 1)
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 define_commit_slab(commit_names, struct commit_name *);
 
 static const char * const describe_usage[] = {

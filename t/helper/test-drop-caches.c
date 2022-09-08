@@ -1,6 +1,9 @@
 #include "test-tool.h"
 #include "git-compat-util.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 #if defined(GIT_WINDOWS_NATIVE)
 #include "lazyload.h"
 #include <winnt.h>

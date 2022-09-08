@@ -21,6 +21,9 @@
 #include "trace2.h"
 #include "chunk-format.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 void git_test_write_commit_graph_or_die(void)
 {
 	int flags = 0;

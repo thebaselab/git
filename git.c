@@ -6,6 +6,9 @@
 #include "alias.h"
 #include "shallow.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 #define RUN_SETUP		(1<<0)
 #define RUN_SETUP_GENTLY	(1<<1)
 #define USE_PAGER		(1<<2)
@@ -476,13 +479,14 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
 	if (S_ISFIFO(st.st_mode) || S_ISSOCK(st.st_mode))
 		return 0;
 
+	// iOS: Don't close stdout
 	/* Check for ENOSPC and EIO errors.. */
-	if (fflush(stdout))
-		die_errno(_("write failure on standard output"));
-	if (ferror(stdout))
-		die(_("unknown write failure on standard output"));
-	if (fclose(stdout))
-		die_errno(_("close failed on standard output"));
+	// if (fflush(stdout))
+	// 	die_errno(_("write failure on standard output"));
+	// if (ferror(stdout))
+	// 	die(_("unknown write failure on standard output"));
+	// if (fclose(stdout))
+	// 	die_errno(_("close failed on standard output"));
 	return 0;
 }
 

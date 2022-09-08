@@ -4,6 +4,9 @@
 #include "utf8.h"
 #include "date.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 int starts_with(const char *str, const char *prefix)
 {
 	for (; ; str++, prefix++)
@@ -945,9 +948,9 @@ int fprintf_ln(FILE *fp, const char *fmt, ...)
 	int ret;
 	va_list ap;
 	va_start(ap, fmt);
-	ret = vfprintf(fp, fmt, ap);
+	ret = vfprintf(thread_stderr, fmt, ap);
 	va_end(ap);
-	if (ret < 0 || putc('\n', fp) == EOF)
+	if (ret < 0 || fputc('\n', thread_stderr) == EOF)
 		return -1;
 	return ret + 1;
 }

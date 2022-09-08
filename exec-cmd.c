@@ -17,6 +17,9 @@
 
 #endif /* RUNTIME_PREFIX */
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 #define MAX_ARGS 32
 
 static const char *system_prefix(void);
@@ -334,8 +337,9 @@ int execv_git_cmd(const char **argv)
 	prepare_git_cmd(&nargv, argv);
 	trace_argv_printf(nargv.v, "trace: exec:");
 
+	printf("Executing: %s\n", nargv.v);
 	/* execvp() can only ever return if it fails */
-	sane_execvp("git", (char **)nargv.v);
+	execvp("git", (char **)nargv.v);
 
 	trace_printf("trace: exec failed: %s\n", strerror(errno));
 

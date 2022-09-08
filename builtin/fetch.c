@@ -32,6 +32,9 @@
 
 #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static const char * const builtin_fetch_usage[] = {
 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
 	N_("git fetch [<options>] <group>"),

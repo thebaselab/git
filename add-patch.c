@@ -9,6 +9,9 @@
 #include "compat/terminal.h"
 #include "prompt.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 enum prompt_mode_type {
 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_ADDITION, PROMPT_HUNK,
 	PROMPT_MODE_MAX, /* must be last */

@@ -21,6 +21,9 @@
 #include "range-diff.h"
 #include "strmap.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 static struct decoration name_decoration = { "object names" };
 static int decoration_loaded;
 static int decoration_flags;
@@ -650,10 +653,10 @@ void show_log(struct rev_info *opt)
 			show_children(opt, commit, abbrev_commit);
 		show_decorations(opt, commit);
 		if (opt->graph && !graph_is_commit_finished(opt->graph)) {
-			putc('\n', opt->diffopt.file);
+			fputc('\n', opt->diffopt.file);
 			graph_show_remainder(opt->graph);
 		}
-		putc(opt->diffopt.line_termination, opt->diffopt.file);
+		fputc(opt->diffopt.line_termination, opt->diffopt.file);
 		return;
 	}
 

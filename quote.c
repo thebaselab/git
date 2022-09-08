@@ -2,6 +2,9 @@
 #include "quote.h"
 #include "strvec.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 int quote_path_fully = 1;
 
 static inline int need_bs_quote(char c)

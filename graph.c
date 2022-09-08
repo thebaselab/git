@@ -6,6 +6,9 @@
 #include "revision.h"
 #include "strvec.h"
 
+#include "ios_error.h"
+#define printf(args...) fprintf(thread_stdout, args)
+
 /* Internal API */
 
 /*
